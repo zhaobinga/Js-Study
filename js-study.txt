@@ -1,0 +1,111 @@
+js初级学习
+
+
+插入js：
+    <script type="text/javascript">
+    	js代码
+    </script>
+
+引入js代码：	//在对应js文件中写js代码
+	<script src="script.js"></script>
+
+js可以放到html任何位置，浏览器根据先后顺序执行js片段。但是要初始化的东西
+如css需要提前执行，所以对应的js代码应放在<head> 初始化的js代码 </head>  
+
+
+
+打印操作： 
+1	document.write("要输入的内容");
+2	document.write(变量名)；
+3	document.write(变量名+"要输入的内容")；
+4	document.write("html标签，如<br>");
+
+注释：//   /*。。。。*/
+
+声明变量：var maChar="";		//js区分大小写
+
+判断语句：
+	if(条件){
+		条件成立时执行的代码
+	}
+	else{
+		条件不成立执行的代码 
+	}
+
+	
+	
+声明函数：
+	function 函数名(){
+		函数代码
+	}
+
+调用函数：
+1	直接调用		函数名()；
+2	监听调用		
+	<form>
+    	//点击相应按钮后调用函数
+    	<input type="button"  value="点击我" onclick="    函数名()" />  
+        
+    </form>
+
+	
+	
+警告消息对话框：	//会顺序执行弹出的对话框，期间不能进行其他操作
+1	alert(变量名);
+2	alert("要输入的警告");
+
+确认消息对话框：	//用户点击确认或者取消来对应接受变量的bool值
+1	confirm("显示要求确认的内容");
+2	var confirmMessage = confirm("显示要求确认的内容");
+3	if(confirmMessage == ture){balabala}
+
+交互消息对话框：	//弹出的对话框包含一个文本输入框，输入的内容就作为函数返回值
+1	prompt(str1 , str2);	//str1不可更改，str2可以更改
+2	var myName = prompt("请输入你的姓名：")；
+3	if (myName != null){balabala}
+
+
+
+打开新窗口：window.open('URL', '窗口名称', '参数字符')
+1	具有特殊意义的名称
+	_blank：在新窗口显示目标网页
+    _self：在当前窗口显示目标网页
+    _top：框架网页中在上部窗口中显示目标网页
+2	window.open('http://www.imooc.com' , '_top' ,
+    'width=600,height=400,top=100,left=0'); 
+
+关闭窗口：
+1	window.close();  	 //关闭本窗口
+2	var myWindow = window.open('url');
+	myWindow.close();	 //关闭指定窗口
+
+
+
+文档对象模型DOM：DOM将html文档呈现为节点树（元素，文本，属性看作节点）
+1. 元素节点：<html>、<body>、<p>等都是元素节点，即标签。	//为下面两个节点的父节点
+
+2. 文本节点:向用户展示的内容，如<li>...</li>中的JavaScript、DOM、CSS等文本。
+
+3. 属性节点:元素属性，如<a>标签的链接属性href="http://www.imooc.com"。
+
+通过ID获取元素：document.getElementById("id") ;	//获取的元素为对象
+1	var myElement = document.getElementById("id") ;
+
+
+
+innerHTML属性：object.innerHTML			//对应此对象的内部内容
+1	object.innerHTML = "new text";		//修改为新的内容
+
+改变html样式：Object.style.property="new style";
+1	基本属性表（property）:color, backgroundColor, height, width, font, fontFamily, fontSize
+
+显示和隐藏(display属性)：
+1	object.style.display = "block" ;
+2	object.style.display = "none" ;
+
+控制类名（className 属性）:	object.className = "classname" ;
+	var myElement = document.getElementById("id") ;		//id唯一标识
+	myElement.className = "newClassName";				//class名不唯一标识，可以指向多个标签
+
+
+
