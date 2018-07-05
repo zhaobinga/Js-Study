@@ -1,0 +1,135 @@
+JSP学习笔记和心得
+基础内容篇
+
+简介：标签<%   %>
+1	JSP通过网页表单获取用户输入数据、访问数据库及其他数据源，然后动态地创建网页
+2	JSP标签有多种功能，比如访问数据库、记录用户选择信息、访问JavaBeans组件等，
+	还可以在不同的网页中传递控制信息和共享信息
+3	JSP基于Java Servlets API，因此，JSP拥有各种强大的企业级Java API，
+	包括JDBC，JNDI，EJB，JAXP等等。
+4	SP页面可以与处理业务逻辑的servlets一起使用，这种模式被Java servlet 模板引擎所支持	
+5	jsp->servlet.java->servlet.class
+
+生命周期：
+1	JSP编译：解析jsp文件->转为servlet->编译servlet	
+2	初始化：在为请求提供服务前调用jspInit(),支持自定义此方法，
+			可以在jspInit()方法中初始化数据库连接、打开文件和创建查询表
+3	执行阶段：描述与请求相关的交互行为，jsp引擎调用 _jspService()
+	_jspService()方法在每个request中被调用一次并且负责产生与之相对应的response，
+	并且它还负责产生所有7个HTTP方法的回应，比如GET、POST、DELETE等等
+	
+	void _jspService(HttpServletRequest request,HttpServletResponse response)
+	{
+		// 服务端处理代码
+	}
+4	清理：当需要执行任何清理工作时复写jspDestroy()方法，比如释放数据库连接或者关闭文件夹等等
+	public void jspDestroy()
+	{
+		// 清理代码
+	}
+
+
+	
+	
+jsp语法
+1	脚本程序：可以包含任意量的Java语句、变量、方法或表达式
+	<% 代码片段 %>
+	等价的xml语句：	<jsp:scriptlet> 代码片段 </jsp:scriptlet>
+	//任何文本、HTML标签、JSP元素必须写在脚本程序的外面
+2	jsp声明的语法格式：一个声明语句可以声明一个或多个变量、方法，供后面的Java代码使用
+	<%! int i = 0; %> 
+	<%! int a, b, c; %> 
+	<%! Circle a = new Circle(2.0); %> 
+3	jsp表达式：先被转化成String，然后插入到表达式出现的地方，表达式不能以分号结束
+	<%= 表达式 %>：等价的xml->  <jsp:expression> 表达式 </jsp:expression>
+4	JSP注释:为代码作注释以及将某段代码注释掉。
+	<%--  注释 --%> :jsp注释，内容不会被发送至浏览器甚至不会被编译
+	<!-- 注释 -->：html注释，浏览器查看源码能看见注释内容
+	<\% 和 %\>代表静态常量
+	/' 和 /" 使用引号属性的格式
+5	jsp指令：用来设置与整个JSP页面相关的属性
+	<%@ directive attribute="value" %>
+	三种指令标签
+		<%@ page ... %> 定义页面的依赖属性，比如脚本语言、error页面、缓存需求等等
+		<%@ include ... %> 包含其他文件
+		<%@ taglib ... %> 引入标签库的定义，可以自定义标签	
+6	jsp行为：JSP行为标签使用XML语法结构来控制servlet引擎。它能够动态插入一个文件，
+	重用JavaBean组件，引导用户去另一个页面，为Java插件产生相关的HTML等等
+	唯一语法格式：<jsp:action_name attribute="value" />
+	
+	一些可用的jsp标签
+jsp:include 		用于在当前页面中包含静态或动态资源
+jsp:useBean 		寻找和初始化一个JavaBean组件
+jsp:setProperty 	设置 JavaBean组件的值
+jsp:getProperty 	将 JavaBean组件的值插入到 output中
+jsp:forward 		从一个JSP文件向另一个文件传递一个包含用户请求的request对象
+jsp:plugin 			用于在生成的HTML页面中包含Applet和JavaBean对象
+jsp:element 		动态创建一个XML元素
+jsp:attribute 		定义动态创建的XML元素的属性
+jsp:body 			定义动态创建的XML元素的主体
+jsp:text 			用于封装模板数据
+
+7	jsp隐含对象：JSP支持九个自动定义的变量（外号隐含对象）
+
+request 		HttpServletRequest类的实例
+response 		HttpServletResponse类的实例
+out 			PrintWriter类的实例，用于把结果输出至网页上
+session 		HttpSession类的实例
+application 	ServletContext类的实例，与应用上下文有关
+config 			ServletConfig类的实例
+pageContext 	PageContext类的实例，提供对JSP页面所有对象以及命名空间的访问
+page 			类似于Java类中的this关键字
+Exception 		Exception类的对象，代表发生错误的JSP页面中对应的异常对象
+
+8	控制流语句
+	if-else：
+	<% if (day == 1 | day == 7) { %>      
+		<p> Today is weekend</p>
+	<% } else { %>      
+		<p> Today is not weekend</p>
+	<% } %>
+
+	switch-case:
+	<%! int day = 3; %> 
+<%  
+	switch(day) { 
+	case 0:    
+	out.println("It\'s Sunday.");    
+	break; 
+	default:    
+	out.println("It's Saturday."); 
+	} 
+%>
+
+	for:
+	<%! int fontSize; %> 
+	<%for ( fontSize = 1; fontSize <= 3; fontSize++){ %>   
+	<font color="green" size="<%= fontSize %>">    
+		JSP Tutorial   
+	</font><br />
+	<%}%>
+
+	do-while:
+	<%! int fontSize; %> 
+	<%while ( fontSize <= 3){ %>   
+		<font color="green" size="<%= fontSize %>">    
+			JSP Tutorial   
+		</font><br />
+		<%fontSize++;%>
+	<%}%>
+
+9	jsp运算符：逻辑与操作运算符		//优先级顺序，结合性（左到右，右到左）
+
+10	jsp常量：
+	布尔值(boolean)：true 和 false；
+	整型(int)：与Java中的一样;
+	浮点型(float)：与Java中的一样;
+	字符串(string)：以单引号或双引号开始和结束；
+	Null：null
+
+
+
+
+
+
+
