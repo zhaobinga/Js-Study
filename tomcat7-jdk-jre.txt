@@ -1,0 +1,22 @@
+jdk和jre的配置：
+1	系统变量中新建
+	变量名：JAVA_HOME
+	变量值：jdk的路径（C:\Program Files\Java\jdk-10.0.1）
+2	在系统变量找到path变量名，向其中添加变量值
+	变量值：jdk路径下的bin目录（C:\Program Files\Java\jdk-10.0.1\bin）
+
+3	在系统变量中新建
+	变量名：CLASSPATH
+	变量值：jdk\bin下的两个jar包
+			（C:\Program Files\Java\jdk-10.0.1\bin\dt.jar）
+			（C:\Program Files\Java\jdk-10.0.1\bin\tools.jar）
+4	验证是否配置成功：
+	命令行输入：java -version
+	//正常显示版本号
+	命令行输入：javac
+	//弹出许多命令参数即正常
+	
+tomcat的配置：安装版与解压版
+	福利：tomcat7及以后版本都不需要进行环境变量配置
+	前提：tomcat的bin目录下查看catalina.bat,如果有，那就欧克
+	端口输入： localhost:8080
